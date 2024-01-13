@@ -1,0 +1,101 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> signInManager
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    .bg-custom-pink {
+        background-color: #FFD6E4;
+    }
+</style>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/BooksToBoxDemo.styles.css" asp-append-version="true" />
+    <link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-custom-pink border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img width="150px" height="50px" src="/logo.jpg"/></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        
+                        @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" style="color:black" aria-expanded="false">
+                                    Admin
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="AdminBook" asp-action="BookAdd">Add Book</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="AdminCategory" asp-action="CategoryAdd">Add Category</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="AdminBook" asp-action="BookList">Show all books</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="AdminUsers" asp-action="List">Show users</a></li>
+                                </ul>
+                            </li>
+                        }
+                        <form class="d-flex mx-auto" asp-controller="Home" asp-action="Search" method="get">
+                            <div class="form-group">
+                                <label for="searchTerm">Search</label>
+                                <input type="text" name="searchTerm" />
+                                <input type="submit" value="Search" class="btn btn-primary" />
+                            </div>
+                        </form>                       
+                    </ul>
+
+                    <div class="d-flex align-items-center">
+                        @if (signInManager.IsSignedIn(User))
+                        {
+                             <li class="nav-item dropdown">
+                            <div class="me-3 text-dark" >
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        @User?.Identity?.Name
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Book" asp-action="AddReadList">Read List</a></li>
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Book" asp-action="AddIveReadList">I've Read</a></li>
+                                       
+                                    </ul>
+                            </div>
+                            </li>
+                            <a class="btn me-3 bg-light text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
+                            
+                        }
+                        else
+                        {
+                            <a class="btn me-3 bg-light text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+
+                            <a class="btn me-3 bg-light text-dark" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+                        }
+                       
+                    </div>
+
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+   
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

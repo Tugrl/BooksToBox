@@ -1,0 +1,15 @@
+﻿@model BooksToBoxDemo.Models.ViewModels.CategoryAddRequest
+@{
+}
+<div class="container py-5">
+   <form method="post">
+       <div class="mb-3">
+           <label class="form-label">Category Name</label>
+           <input type="text" class="form-control" id="categoryName" asp-for="CategoryName" required/>
+           <span class="text-danger" asp-validation-for="CategoryName"></span>
+       </div>
+       <div class="mb-3">
+           <button type="submit" class="btn btn-dark">Add</button>
+       </div>
+   </form>
+</div>

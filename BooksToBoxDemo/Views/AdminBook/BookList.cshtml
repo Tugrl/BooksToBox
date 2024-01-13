@@ -1,0 +1,59 @@
+﻿@model List<BooksToBoxDemo.Models.BookModel>
+
+    <div class="bg-secondary bg-opacity-10 py-2">
+        <div class="container">
+            <h1>Show All Books - Admin Functionality</h1>
+        </div>
+    </div>
+
+    <div class="container py-5">
+    @if(Model!= null && Model.Any())
+    {
+        
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>BookID</th>
+                    <th>BookName</th>
+                    <th>Author</th>
+                    <th>Category</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var book in Model)
+                {
+                    <tr>
+                        <td>@book.BookID</td>
+                        <td>@book.BookName</td>
+                        <td>@book.Author</td>
+                        <td>
+                            <div class="d-flex">
+                                @foreach (var category in book.Categories)
+                                {
+                                    <span class="badge bg-secondary me-1">@category.CategoryName</span>
+                                }
+                            </div>
+                        </td>
+                        <td>
+                            <a asp-area=""
+                                asp-controller="AdminBook"
+                                asp-action="BookEdit"
+                                asp-route-id="@book.BookID">
+                                Edit
+                            </a>
+                        </td>
+                        
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+
+    }
+    else
+    {
+        <p>No Books Found!</p>
+    }
+
+    </div>

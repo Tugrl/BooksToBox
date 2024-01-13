@@ -1,0 +1,89 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> signInManager
+@model BooksToBoxDemo.Models.ViewModels.HomeViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #f0f0f0; /* Sayfa arkaplan rengi */
+    }
+
+    .full-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1; /* Resmi sayfanın arkasına almak için z-index değeri negatif olmalıdır */
+        opacity: 1; /* Şeffaflık düzeyi (0 ile 1 arasında) */
+    }
+
+    .content {
+        position: relative;
+        z-index: 1; /* Sayfa içeriğinin resmin üzerinde görünmesini sağlamak için z-index değeri pozitif olmalıdır */
+    }
+</style>
+
+<div class="full-background">
+    <img src="https://images.pexels.com/photos/1242348/pexels-photo-1242348.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="BooksToBox" class="d-block mx-lg-auto img-fluid" width="100%" />
+</div>
+
+<div class="content container col-xxl-8 px-4 py-5">
+    <div class="row align-items-center g-5 py-5">
+        <div class="col-12 col-lg-6">
+            <h1 class="display-5 fw lh-1 mb-3">
+                BooksToBox <br />The Book Platform
+        </div>
+        <div class="col-12 col-lg-6">
+            <img src="https://res.cloudinary.com/dhfaaxi9r/image/upload/v1705100345/ivmjyyqgprfdnenrfmps.png" alt="BooksToBox" class="d-block mx-lg-auto img-fluid" width="300" />
+        </div>
+    </div>
+</div>
+ 
+                
+                
+                            
+                            
+<div class="container">
+    <div class="row">
+        @if (Model != null && Model.Books.Any())
+        {
+            foreach (var book in Model.Books)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card" style="width: 18rem; height:10rem; background-color:beige;">                      
+                        <img src="@book.BookImage" alt="@book.BookName" class="card-img-top img-fluid">
+                        <div class="card-body">
+                            <h5 class="card-title">@book.BookName</h5>
+                            <p class="card-text">@book.Author</p>
+                            <p class="card-text">
+                                @foreach (var category in book.Categories)
+                                {
+                                    <span class="badge badge-secondary text-dark">@category.CategoryName</span>
+                                }
+                            </p>
+                            <a href="@Url.Action("Index", "Book", new { bookId = book.BookID })" class="btn btn-dark">See Comments</a>
+                            @if (signInManager.IsSignedIn(User))
+                            {
+                                <form method="post" asp-area="" asp-controller="Book" asp-action="AddReadList" asp-route-bookId="@book.BookID">
+                                    <button type="submit" class="btn btn-dark">Add Readlist</button>
+                                </form>
+                                <form method="post" asp-area="" asp-controller="Book" asp-action="AddIveReadList" asp-route-bookId="@book.BookID">
+                                    <button type="submit" class="btn btn-dark">I've Read</button>
+                                </form>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+                        
+                
+                

@@ -1,0 +1,29 @@
+﻿@model BooksToBoxDemo.Models.ProfileModel
+@{
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-6">
+            @if (Model != null && Model.WantReadBooks.Any())
+            {
+                foreach (var book in Model.WantReadBooks)
+                {
+                    <div class=" mb-5 bg-light box-shadow">
+                        <img src="@book.BookImage" alt="@book.BookName"
+                             class="mb-2 d-block img-fluid" />
+                        <h4 style="background-color: #3498db; color: #000000;" class="mb-2">@book.BookName  @book.Author</h4>
+                        @* <p class=" mb-2">@book.Categories</p> *@
+                        @* <p class="mb-2">
+                            @foreach (var category in book.Categories)
+                            {
+                                <span class="badge bg-secondary me-1">@category.CategoryName</span>
+                            }
+                        </p> *@
+                    </div>
+                }
+            }
+
+        </div>
+    </div>
+</div>
