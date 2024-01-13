@@ -47,13 +47,21 @@
                                 </ul>
                             </li>
                         }
-                        <form class="d-flex mx-auto" asp-controller="Home" asp-action="Search" method="get">
+                        @* <form class="d-flex mx-auto" asp-controller="Home" asp-action="Search" method="get">
                             <div class="form-group">
                                 <label for="searchTerm">Search</label>
                                 <input type="text" name="searchTerm" />
                                 <input type="submit" value="Search" class="btn btn-primary" />
                             </div>
-                        </form>                       
+                        </form>  *@      
+                        <form class="d-flex mx-auto" asp-controller="Home" asp-action="Search" method="get">
+                            <div class="form-group">
+                                <label for="searchTerm">Search</label>
+                                <input type="text" name="searchTerm" />
+                                <input type="submit" value="Search" class="btn btn-primary" style="background-color: purple; border-color: purple;" />
+                            </div>
+                        </form>
+
                     </ul>
 
                     <div class="d-flex align-items-center">
